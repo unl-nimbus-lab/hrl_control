@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  hrl_controller:
+    image: grantphllps/hrl_docker_drone
+    #image: clustering:latest
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    container_name: hrl
+    network_mode: "host"
+    volumes:
+      - /home/ubuntu/rosbags:/home/rosbags
+      - /home/ubuntu/arl-swarm/docker/drone:/home/drone
+    devices: 
+      - ${PORT}:${PORT}
+    command: >
+      /bin/bash -c "source /home/catkin_ws/devel/setup.bash && 
+                    export $$(cat /home/drone/.env) &&
+                    roslaunch src/hrl_control/launch/hrl_control.launch"
+    restart: always

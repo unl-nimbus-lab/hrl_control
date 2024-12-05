@@ -1,0 +1,36 @@
+docker run -it --net=host --mount type=bind,source="/Users/gphillip/arl-swarm/swarm-nodes/custom_libs",target=/home/catkin_ws/src/custom_libs/ --mount type=bind,source="/Users/gphillip/arl-swarm/swarm-nodes/swarm_msgs",target=/home/catkin_ws/src/swarm_msgs/ --mount type=bind,source="/Users/gphillip/arl-swarm/swarm-nodes/clustering_control",target=/home/catkin_ws/src/clustering_control/ --mount type=bind,source="/Users/gphillip/arl-swarm/swarm-nodes/hrl_planner",target=/home/catkin_ws/src/hrl_planner/ --mount type=bind,source="/Users/gphillip/arl-swarm/swarm-nodes/swarm_comms",target=/home/catkin_ws/src/swarm_comms/ swarm_devel
+
+XPS
+
+docker run -it --net=host \
+ --mount type=bind,source="/home/gus/arl-swarm/swarm-nodes/custom_libs",target=/home/catkin_ws/src/custom_libs/  \
+ --mount type=bind,source="/home/gus/arl-swarm/swarm-nodes/swarm_msgs",target=/home/catkin_ws/src/swarm_msgs/ \
+ --mount type=bind,source="/home/gus/arl-swarm/swarm-nodes/command_xform",target=/home/catkin_ws/src/command_xform/ \
+ --mount type=bind,source="/home/gus/arl-swarm/swarm-nodes/state_provider",target=/home/catkin_ws/src/state_provider/ \
+ --mount type=bind,source="/home/gus/arl-swarm/swarm-nodes/lqr_control",target=/home/catkin_ws/src/lqr_control/ \
+ --mount type=bind,source="/home/gus/arl-swarm/swarm-nodes/hrl_command_interpret",target=/home/catkin_ws/src/hrl_command_interpret/ \
+ --mount type=bind,source="/home/gus/arl-swarm/swarm-nodes/hrl_control",target=/home/catkin_ws/src/hrl_control/ \
+ --mount type=bind,source="/home/gus/arl-swarm/swarm-nodes/bag_handler",target=/home/catkin_ws/src/bag_handler/ \
+ swarm_devel
+
+ MAC
+
+ docker run -it --net=host \
+ --mount type=bind,source="/Users/gphillip/arl-swarm/swarm-nodes/custom_libs",target=/home/catkin_ws/src/custom_libs/  \
+ --mount type=bind,source="/Users/gphillip/arl-swarm/swarm-nodes/swarm_msgs",target=/home/catkin_ws/src/swarm_msgs/ \
+ --mount type=bind,source="/Users/gphillip/arl-swarm/swarm-nodes/command_xform",target=/home/catkin_ws/src/command_xform/ \
+ --mount type=bind,source="/Users/gphillip/arl-swarm/swarm-nodes/state_provider",target=/home/catkin_ws/src/state_provider/ \
+ --mount type=bind,source="/Users/gphillip/arl-swarm/swarm-nodes/lqr_control",target=/home/catkin_ws/src/lqr_control/ \
+ --mount type=bind,source="/Users/gphillip/arl-swarm/swarm-nodes/hrl_command_interpret",target=/home/catkin_ws/src/hrl_command_interpret/ \
+ --mount type=bind,source="/Users/gphillip/arl-swarm/swarm-nodes/hrl_control",target=/home/catkin_ws/src/hrl_control/ \
+ --mount type=bind,source="/Users/gphillip/arl-swarm/swarm-nodes/bag_handler",target=/home/catkin_ws/src/bag_handler/ \
+ swarm_devel
+
+ 
+
+
+
+ --mount type=bind,source="/home/gus/arl-swarm/swarm-nodes/clustering_control",target=/home/catkin_ws/src/clustering_control/ \
+  --mount type=bind,source="/home/gus/arl-swarm/swarm-nodes/hrl_planner",target=/home/catkin_ws/src/hrl_planner/ \
+   --mount type=bind,source="/home/gus/arl-swarm/swarm-nodes/swarm_comms",target=/home/catkin_ws/src/swarm_comms/ \
+    --mount type=bind,source="/home/gus/arl-swarm/swarm-nodes/altitude_controller",target=/home/catkin_ws/src/altitude_controller/ \

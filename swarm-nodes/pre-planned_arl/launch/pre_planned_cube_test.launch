@@ -1,0 +1,8 @@
+<launch>
+    <!-- THIS IS A TEST FILE FOR A DOCKER IMAGE AND SHOULD BE USED FOR TESTING DOCKER COMPOSE UP -->
+    <param name="trajectory_file" type="str" value="/home/catkin_ws/src/pre-planned_arl/src/trajectoryTest.txt" />
+    <param name="height" type="double" value="3.0" />
+
+    <node pkg="pre-planned_arl" name="pre_planned_arl_cube" type="pre_planned_arl_cube" output="screen" ></node>
+
+</launch>

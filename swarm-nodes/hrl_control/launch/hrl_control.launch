@@ -1,0 +1,86 @@
+<launch>
+
+  <group ns="agent_$(env SYS_ID)">
+
+    <!-- Set default values from environment variables -->
+    <param name="MavDev"  value="$(optenv PORT udp://127.0.0.1)" />
+    <param name="MavPort" value="$(optenv BAUD 14560@14565)" />
+    <param name="SystemID" value="$(optenv SYS_ID 1)" />
+    <param name="ClusterID" value="$(optenv CLS_ID 1)" />
+    <param name="agentIDX"  value="$(optenv AGENT_IDX 1)" />
+    <param name="agentAlt"  value="$(optenv AGENT_ALT 400)" />
+    <param name="homeLat"   value="$(optenv HOME_LAT 40.846740)"/>
+    <param name="homeLon"   value="$(optenv HOME_LON -96.471819)"/>
+    <param name="homeAlt"   value="$(optenv HOME_ALT 390)"/>
+    <param name="bagDir"    value="$(optenv BAG_DIR /home/rosbags/ )"/>
+    <param name="thrustScalar"  value="$(optenv THRUST_SCALAR 1.0 )"/>
+
+
+
+    <arg name="fcu_url" default="$(env PORT):$(env BAUD)"/>
+    <arg name="gcs_url" default="" />
+    <arg name="tgt_system" default="$(env SYS_ID)" />
+    <arg name="tgt_component" default="" />
+    <arg name="log_output" default="screen" />
+    <arg name="fcu_protocol" default="v2.0" />
+    <arg name="respawn_mavros" default="false" />
+
+    <!-- Launch mavros node -->
+    <include file="$(find mavros)/launch/node.launch">
+      <arg name="pluginlists_yaml" value="$(find mavros)/launch/apm_pluginlists.yaml" />
+      <arg name="config_yaml" value="$(find mavros)/launch/apm_config.yaml" />
+      <arg name="fcu_url" value="$(arg fcu_url)" />
+      <arg name="gcs_url" value="$(arg gcs_url)" />
+      <arg name="tgt_system" value="$(arg tgt_system)" />
+      <arg name="tgt_component" value="$(arg tgt_component)" />
+      <arg name="log_output" value="$(arg log_output)" />
+      <arg name="fcu_protocol" value="$(arg fcu_protocol)" />
+      <arg name="respawn_mavros" value="$(arg respawn_mavros)" />
+    </include>
+    
+
+    <!-- Launch state_provider node -->
+    <node name="state_provider" pkg="state_provider" type="state_provider" output="screen">
+
+      <remap from="/mavros/global_position/swarm" to="/agent_$(env SYS_ID)/mavros/global_position/swarm" />
+      <remap from="/mavros/global_position/local" to="/agent_$(env SYS_ID)/mavros/global_position/local" />
+      <remap from="/agent_state" to="/agent_$(env SYS_ID)/agent_state" />
+    
+    </node>
+
+    <!-- Launch controller node -->
+    <node name="hrl_control" pkg="hrl_control" type="hrl_control" output="screen">
+
+      <remap from="/agent_state" to="/agent_$(env SYS_ID)/agent_state" />
+      <remap from="/aug_state" to="/agent_$(env SYS_ID)/aug_state" />
+      <remap from="/publish_state" to="/agent_$(env SYS_ID)/publish_state" />
+      <remap from="/vector" to="/agent_$(env SYS_ID)/vector" />
+      <remap from="/mavros/set_mode" to="/agent_$(env SYS_ID)/mavros/set_mode" />
+
+    </node>
+
+    <!-- Launch command_xform node -->
+    <node name="command_xform" pkg="command_xform" type="command_xform" output="screen">
+
+      <remap from="/mavros/setpoint_raw/attitude" to="/agent_$(env SYS_ID)/mavros/setpoint_raw/attitude" />
+      <remap from="/vector" to="/agent_$(env SYS_ID)/vector" />
+
+    </node>
+
+    <!-- Launch command_interpret node -->
+    <node name="hrl_command_interpret" pkg="hrl_command_interpret" type="hrl_command_interpret" output="screen">
+
+      <remap from="/aug_state" to="/agent_$(env SYS_ID)/aug_state" />
+      <remap from="/publish_state" to="/agent_$(env SYS_ID)/publish_state" />
+      <remap from="/mavros/debug_value/debug_vector" to="/agent_$(env SYS_ID)/mavros/debug_value/debug_vector" />
+      <remap from="/mavros/debug_value/named_value_int" to="/agent_$(env SYS_ID)/mavros/debug_value/named_value_int" />
+
+    </node>
+
+    <node name="bag_handler" pkg="bag_handler" type="bag_handler.py" output="screen">
+      <remap from="/mavros/state" to="/agent_$(env SYS_ID)/mavros/state" />
+    </node>
+  
+  </group>
+
+</launch>

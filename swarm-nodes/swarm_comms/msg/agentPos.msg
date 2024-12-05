@@ -1,0 +1,11 @@
+int8 id
+float64 x
+float64 y
+float64 z
+float64 vx
+float64 vy
+float64 vz
+float64 ix
+float64 iy
+float64 iz
+float64 time_since_update

@@ -1,0 +1,5 @@
+<launch>
+	<arg name="system_ID" default="7" />
+	<node pkg="swarm_comms" type="swarm_comm.py" name="swarm_coms" output="screen" args="$(arg system_ID)"/>
+</launch>
+

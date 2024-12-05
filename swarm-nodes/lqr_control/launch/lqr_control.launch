@@ -1,0 +1,16 @@
+<launch>
+  <!-- Launch state_provider node -->
+  <node name="state_provider" pkg="state_provider" type="state_provider" output="screen" />
+
+  <!-- Launch altitude_controller node -->
+  <node name="lqr_control" pkg="lqr_control" type="lqr_control" output="screen" />
+
+  <!-- Launch command_xform node -->
+  <node name="command_xform" pkg="command_xform" type="command_xform" output="screen">
+
+    <!-- Remap the command topic to the swarm_comms topic -->
+    <!-- <remap from="/agent_1/mavros/setpoint_raw/attitude" to="debug" /> -->
+  </node>
+
+  <node name="hrl_command_interpret" pkg="hrl_command_interpret" type="hrl_command_interpret" output="screen" />
+</launch>

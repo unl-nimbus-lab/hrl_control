@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+
+    environment {
+        // Set the Docker image name
+        DOCKER_CREDENTIALS_ID = '70c50f5b-47a1-474c-9afb-b8e4a875f48e'
+        DOCKER_REPOSITORY = 'grantphllps/arl_swarm_sim'
+        DOCKER_IMAGE_NAME = "grantphllps/arl_swarm_sim"
+    }
+
+    stages {
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Set the Docker image name and tag
+                    def imageName = "${DOCKER_IMAGE_NAME}"
+                    def imageTag = "latest"
+
+                    // Build the Docker image
+                    sh "docker build -f SimulatorDockerfile -t ${imageName}:${imageTag} ."
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    // Set the Docker image name and tag
+                    def imageName = "${DOCKER_REPOSITORY}"
+                    def imageTag = "latest"
+
+                    // Log in to Docker Hub
+                    withDockerRegistry(credentialsId: "${DOCKER_CREDENTIALS_ID}", url: 'https://index.docker.io/v1/') {
+                        // Push the Docker image
+                        sh "docker push ${imageName}:${imageTag}"
+                    }
+                }
+            }
+        }
+    }
+}

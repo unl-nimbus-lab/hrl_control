@@ -1,0 +1,13 @@
+<launch>
+    <!-- USE THIS FILE ONCE DOCKER-COMPOSE TESTING IS COMPLETE, THIS IS THE MAIN LAUNCH FILE -->
+	<arg name="fileNo" default="Test" />
+	<arg name="alt" default="3.0" />
+    <arg name="system_ID" default="1" />
+
+    <param name="drone_name" type="int" value="$(arg system_ID)" />
+    <param name="trajectory_file" type="str" value="/home/catkin_ws/src/pre-planned_arl/src/trajectory$(arg fileNo).txt" />
+    <param name="height" type="double" value="$(arg alt)" />
+
+    <node pkg="pre-planned_arl" name="pre_planned_arl_cube" type="pre_planned_arl_cube" output="screen" ></node>
+
+</launch>
